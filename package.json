@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
+    "build": "./node_modules/.bin/webpack",
     "server:dev": "webpack-dev-server",
-    "postinstall": "webpack",
+    "postinstall": "./node_modules/.bin/webpack",
     "start": "node server.js"
   },
   "author": "Stefan Graf",
