@@ -7,8 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node ./node_modules/webpack/bin/webpack.js",
     "server:dev": "webpack-dev-server",
-    "postinstall": "node ./node_modules/webpack/bin/webpack.js",
-    "start": "node server.js"
+    "start": "node ./node_modules/webpack/bin/webpack.js && node server.js"
   },
   "author": "Stefan Graf",
   "license": "ISC",
