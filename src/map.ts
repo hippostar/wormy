@@ -1,91 +1,75 @@
-import Game from './game';
+import { Item, ItemType, Point } from './defs';
+import { Game } from './game';
 
-const COLORS = {
-    GROW:'blue',
-    SHRINK:'black',
-    SPEED:'green',
-    SLOW:'red'
+const ITEM_COLORS: { [key: string]: string } = {
+    GROW: 'blue',
+    SHRINK: 'black',
+    SPEED: 'green',
+    SLOW: 'red',
 };
 
-type ItemType = 'GROW'|'SHRINK'|'SPEED'|'SLOW';
+const ITEMS_PER_LEVEL: number = 5;
+const ITEMS_SIZE: number = 10;
 
-export class Item {
-    
-    x:number;
-    y:number;
-    type:ItemType;
-
-    constructor(x:number, y:number, type:ItemType) {
-        this.x = x;
-        this.y = y;
-        this.type = type;
-    }
-
-    compare(other:Item) {
-        return this.x == other.x && this.y == other.y;
-    }
-}
-
-const ITEMS_PER_LEVEL = 5;
-const ITEMS_SIZE = 10;
-
-export default class Map {
+export class Map {
 
     private game: Game;
     private items: Item[];
 
     constructor(game: Game) {
         this.game = game;
-        this.items = [];     
-        this.seed(); 
-    }
-  
-    seed() {
-    
-        const width= this.game.getWidth();
-        const height = this.game.getHeight();
-       
-       const nbItems = ITEMS_PER_LEVEL * (this.game.getLevel() + 1) ;
-       const widthWithPadding = width - 2 * ITEMS_SIZE;
-       const heightWidthPadding = height - 2 * ITEMS_SIZE;
-
-       for (let count = 0;  count < nbItems; count++) {
-
-            // item position
-            const x = ITEMS_SIZE + Math.floor(Math.random() * widthWithPadding);
-            const y = ITEMS_SIZE + Math.floor(Math.random() * heightWidthPadding); 
-
-            // item type            
-            const roll = Math.random() * 100;
-            const type:ItemType = roll < 70 ? 'GROW' : (roll < 80 ? 'SHRINK' : (roll < 95 ? 'SPEED' : 'SLOW'));
-
-            this.items.push(new Item(x, y, type));
-        }
+        this.items = [];
+        this.seed();
     }
 
-    draw(time:number, context:CanvasRenderingContext2D) {
-        context.fillStyle = 'red';
-        const betterItemSize = ITEMS_SIZE * 2/3;
-        this.items.forEach((item) => {
-            context.fillStyle = COLORS[item.type];
-            context.fillRect(item.x - betterItemSize, item.y - betterItemSize, betterItemSize * 2, betterItemSize * 2)
+    public draw(time: number, context: CanvasRenderingContext2D): void {
+        const betterItemSize: number = ITEMS_SIZE * 2 / 3;
+        this.items.forEach((item: Item) => {
+            context.fillStyle = ITEM_COLORS[item.getType()];
+            context.fillRect(item.getX() - betterItemSize, item.getY() - betterItemSize, betterItemSize * 2, betterItemSize * 2);
         });
     }
 
-    getItemsAt(point:{x:number,y:number}) {
-        return this.items.filter(item => 
-            point.x >= item.x - ITEMS_SIZE && 
-            point.y >= item.y - ITEMS_SIZE && 
-            point.x <= item.x + ITEMS_SIZE && 
-            point.y <= item.y + ITEMS_SIZE
-        );
+    public getItemsAt(point: Point): Item[] {
+        return this.items.filter((item: Item) => (
+            point.x >= item.getX() - ITEMS_SIZE &&
+            point.y >= item.getY() - ITEMS_SIZE &&
+            point.x <= item.getX() + ITEMS_SIZE &&
+            point.y <= item.getY() + ITEMS_SIZE
+        ));
     }
-  
-    removeItems(items:Item[]) {
-        this.items = this.items.filter(item => !items.find(toRemove=> toRemove.compare(item)))
+
+    public removeItems(items: Item[]): void {
+        this.items = this.items.filter((item: Item) => !items.find((toRemove: Item) => toRemove.compare(item)));
     }
-  
-    hasItems() {
-      return this.items.length > 0;
+
+    public hasItems(): boolean {
+        return this.items.length > 0;
+    }
+
+    public seed(): void {
+
+        const width: number = this.game.getWidth();
+        const height: number = this.game.getHeight();
+
+        const nbItems: number = ITEMS_PER_LEVEL * (this.game.getLevel() + 1);
+        const widthWithPadding: number = width - 2 * ITEMS_SIZE;
+        const heightWidthPadding: number = height - 2 * ITEMS_SIZE;
+
+        // reset items
+        this.items = [];
+
+        for (let count: number = 0; count < nbItems; count++) {
+
+            // item position
+            const x: number = ITEMS_SIZE + Math.floor(Math.random() * widthWithPadding);
+            const y: number = ITEMS_SIZE + Math.floor(Math.random() * heightWidthPadding);
+
+            // item type
+            const roll: number = Math.random() * 100;
+            const type: ItemType = roll < 70 ? 'GROW' : (roll < 80 ? 'SHRINK' : (roll < 95 ? 'SPEED' : 'SLOW'));
+
+            this.items.push(new Item(x, y, type));
+        }
     }
 }

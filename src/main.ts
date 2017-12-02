@@ -1,9 +1,9 @@
-import Game from './game';
+import { Game } from './game';
 
 window.focus();
 
-let game = new Game();
+const game: Game = new Game();
 game.start();
 
-// global var
+// tslint:disable-next-line:no-any
 (window as any).game = game;
