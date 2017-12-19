@@ -8,7 +8,7 @@
     "tdd": "jest --watch",
     "build": "node ./node_modules/webpack/bin/webpack.js --config webpack.config.prod.js",
     "server:dev": "webpack-dev-server --open --config webpack.config.dev.js",
-    "postinstall": "node ./node_modules/webpack/bin/webpack.js --config webpack.config.prod.js",
+    "postinstall": "node ./node_modules/webpack/bin/webpack.js -p --config webpack.config.prod.js",
     "start": "node server.js"
   },
   "author": "Stefan Graf",
