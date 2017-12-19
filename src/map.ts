@@ -8,8 +8,8 @@ const ITEM_COLORS: { [key: string]: string } = {
     SLOW: 'red',
 };
 
-const ITEMS_PER_LEVEL: number = 5;
-const ITEMS_SIZE: number = 10;
+export const ITEMS_PER_LEVEL: number = 5;
+export const ITEMS_SIZE: number = 10;
 
 export class Map {
 
@@ -29,6 +29,8 @@ export class Map {
             context.fillRect(item.getX() - betterItemSize, item.getY() - betterItemSize, betterItemSize * 2, betterItemSize * 2);
         });
     }
+
+    public getItems(): Item[] { return this.items; }
 
     public getItemsAt(point: Point): Item[] {
         return this.items.filter((item: Item) => (

@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node ./node_modules/webpack/bin/webpack.js",
-    "server:dev": "webpack-dev-server",
-    "postinstall": "node ./node_modules/webpack/bin/webpack.js",
+    "test": "jest",
+    "tdd": "jest --watch",
+    "build": "node ./node_modules/webpack/bin/webpack.js --config webpack.config.prod.js",
+    "server:dev": "webpack-dev-server --open --config webpack.config.dev.js",
+    "postinstall": "node ./node_modules/webpack/bin/webpack.js --config webpack.config.prod.js",
     "start": "node server.js"
   },
   "author": "Stefan Graf",
@@ -24,6 +25,22 @@
     "webpack-dev-server": "^2.4.5"
   },
   "devDependencies": {
-    "tslint": "^5.8.0"
+    "@types/jest": "^21.1.8",
+    "jest": "^22.0.1",
+    "ts-jest": "^22.0.0",
+    "ts-mockito": "^2.2.7",
+    "tslint": "^5.8.0",
+    "webpack-merge": "^4.1.1"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   }
 }

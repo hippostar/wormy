@@ -3,8 +3,8 @@ import { Map } from './map';
 import { Head, Worm } from './worm';
 
 // size
-const WIDTH: number = 800;
-const HEIGHT: number = 400;
+//const WIDTH: number = 800;
+//const HEIGHT: number = 400;
 const SCALE: number = 2;
 
 // movement speed
@@ -56,14 +56,6 @@ export class Game {
         //this.canvas.style.width = WIDTH + 'px';
         //this.canvas.style.height = HEIGHT + 'px';
 
-        // image buffer size
-        this.canvas.width = WIDTH * SCALE;
-        this.canvas.height = HEIGHT * SCALE;
-
-        // save size
-        this.width = this.canvas.width;
-        this.height = this.canvas.height;
-
         this.worm = new Worm(this);
         this.map = new Map(this);
 
@@ -100,6 +92,19 @@ export class Game {
     private loop(time: number): void {
 
         if (this.running) {
+
+            // get window size
+            const w: number = window.innerWidth * SCALE;
+            const h: number = window.innerHeight * SCALE;
+
+            // update canvas size
+            if (this.width !== w || this.height !== h) {
+                this.canvas.style.width = `${Math.floor(w / SCALE)}px`;
+                this.canvas.style.height = `${Math.floor(h / SCALE)}px`;
+                this.width = this.canvas.width = w;
+                this.height = this.canvas.height = h;
+                this.map.seed();
+            }
 
             requestAnimationFrame(this.loop.bind(this));
 
