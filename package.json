@@ -8,7 +8,7 @@
     "tdd": "jest --watch",
     "build": "node ./node_modules/webpack/bin/webpack.js --config webpack.config.prod.js",
     "server:dev": "webpack-dev-server --open --config webpack.config.dev.js",
-    "postinstall": "node ./node_modules/webpack/bin/webpack.js --config webpack.config.prod.js",
+    "postinstall": "node ./node_modules/webpack/bin/webpack.js -p --config webpack.config.prod.js",
     "start": "node server.js"
   },
   "author": "Stefan Graf",
@@ -24,6 +24,7 @@
     "source-map-loader": "^0.2.1",
     "typescript": "^2.3.4",
     "webpack": "^2.6.1",
+    "webpack-merge": "^4.1.1",
     "webpack-dev-server": "^2.4.5"
   },
   "devDependencies": {
@@ -31,8 +32,7 @@
     "jest": "^22.0.1",
     "ts-jest": "^22.0.0",
     "ts-mockito": "^2.2.7",
-    "tslint": "^5.8.0",
-    "webpack-merge": "^4.1.1"
+    "tslint": "^5.8.0"
   },
   "jest": {
     "transform": {
