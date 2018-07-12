@@ -4,14 +4,10 @@ const common = require("./webpack.config.common");
 
 const dev = {
 
-    // Enable sourcemaps for debugging webpack's output.
-    devtool: "source-map",
+    mode: "development",
 
-    plugins: [
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('development'),
-        }),
-    ],
+    // Enable sourcemaps for debugging webpack's output.
+    devtool: "source-map"
 };
 
 module.exports = merge(common, dev);
